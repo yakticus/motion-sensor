@@ -6,8 +6,8 @@ GPIO.setmode(GPIO.BCM)
 
 button_pin = 25
 GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-old_state = True
-input_state = True
+old_state = False
+input_state = False
 
 while True:
     old_state = input_state

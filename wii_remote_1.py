@@ -1,7 +1,4 @@
 #!/usr/bin/python
-#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-#|R|a|s|p|b|e|r|r|y|P|i|-|S|p|y|.|c|o|.|u|k|
-#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #
 # wii_remote_1.py
 # Connect a Nintendo Wii Remote via Bluetooth
@@ -18,8 +15,18 @@
 # -----------------------
 import cwiid
 import time
+import soco
+import time
 
-button_delay = 0.1
+zone_list = list(soco.discover())
+
+
+for zone in zone_list:
+  print zone.player_name
+  if zone.player_name == 'Office':
+    selected_zone = zone
+
+button_delay = 0.3
 
 print 'Press 1 + 2 on your Wii Remote now ...'
 time.sleep(1)
@@ -55,19 +62,25 @@ while True:
   # doing a bitwise AND of the buttons number
   # and the predefined constant for that button.
   if (buttons & cwiid.BTN_LEFT):
-    print 'Left pressed'
+    print 'Previous track'
+    selected_zone.previous()
     time.sleep(button_delay)         
 
   if(buttons & cwiid.BTN_RIGHT):
-    print 'Right pressed'
+    print 'Next track'
+    selected_zone.next()
     time.sleep(button_delay)          
 
   if (buttons & cwiid.BTN_UP):
-    print 'Up pressed'        
+    print 'volume up'
+    vol = selected_zone.volume
+    selected_zone.volume = vol + 1        
     time.sleep(button_delay)          
     
   if (buttons & cwiid.BTN_DOWN):
-    print 'Down pressed'      
+    print 'volume down'
+    vol = selected_zone.volume
+    selected_zone.volume = vol - 1      
     time.sleep(button_delay)  
     
   if (buttons & cwiid.BTN_1):
@@ -79,11 +92,18 @@ while True:
     time.sleep(button_delay)          
 
   if (buttons & cwiid.BTN_A):
-    print 'Button A pressed'
+    info = selected_zone.get_current_transport_info()
+#    print info
+    if info['current_transport_state'] == 'PLAYING':
+      print 'pausing'
+      selected_zone.pause()
+    else:
+      print 'playing'
+      selected_zone.play()
     time.sleep(button_delay)          
 
   if (buttons & cwiid.BTN_B):
-    print 'Button B pressed'
+    print 'button B pressed'
     time.sleep(button_delay)          
 
   if (buttons & cwiid.BTN_HOME):

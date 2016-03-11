@@ -6,11 +6,14 @@ GPIO.setmode(GPIO.BCM)
 
 button_pin = 25
 GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+old_state = True
+input_state = True
 
 while True:
+    old_state = input_state
     input_state = GPIO.input(button_pin)
-    if input_state == False:
+    if input_state == False and old_state == True:
         print('Button Pressed')
-        r = requests.post('http://textbelt.com/text', data = {'number':'', 'message':'the mail is here.'})
+        r = requests.post('http://textbelt.com/text', data = {'number':'9259802217', 'message':'the mail is here.'})
         time.sleep(0.5)
 

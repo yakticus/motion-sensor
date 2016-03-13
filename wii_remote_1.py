@@ -16,15 +16,15 @@
 import cwiid
 import time
 import soco
+from soco import SoCo
 import time
+import socket
 
-zone_list = list(soco.discover())
+office_ip = socket.gethostbyname('sonosoffice')
+family_ip = socket.gethostbyname('sonosfamily')
+parlor_ip = socket.gethostbyname('sonosparlor')
 
-
-for zone in zone_list:
-  print zone.player_name
-  if zone.player_name == 'Office':
-    selected_zone = zone
+selected_zone = SoCo(family_ip)
 
 button_delay = 0.3
 

@@ -24,7 +24,7 @@ office_ip = socket.gethostbyname('sonosoffice')
 family_ip = socket.gethostbyname('sonosfamily')
 parlor_ip = socket.gethostbyname('sonosparlor')
 
-selected_zone = SoCo(family_ip)
+selected_zone = SoCo(office_ip).group.coordinator
 
 button_delay = 0.3
 
@@ -103,17 +103,17 @@ while True:
     time.sleep(button_delay)          
 
   if (buttons & cwiid.BTN_B):
-    print 'button B pressed'
+#    print 'button B pressed'
     time.sleep(button_delay)          
 
   if (buttons & cwiid.BTN_HOME):
-    print 'Home Button pressed'
+ #   print 'Home Button pressed'
     time.sleep(button_delay)           
     
   if (buttons & cwiid.BTN_MINUS):
-    print 'Minus Button pressed'
+#    print 'Minus Button pressed'
     time.sleep(button_delay)   
     
   if (buttons & cwiid.BTN_PLUS):
-    print 'Plus Button pressed'
+#    print 'Plus Button pressed'
     time.sleep(button_delay)
